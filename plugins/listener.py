@@ -12,7 +12,7 @@ class Listener(Plugin):
         print(event.message)
         urls = []
         if len(event.raw_data['message']['attachments']) != 0:
-            for attachment in event.message.raw_data['message']['attachments']:
+            for attachment in event.raw_data['message']['attachments']:
                 urls.append(attachment['url'])
         for url in urls:
             paster.upload_file(url)

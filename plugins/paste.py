@@ -11,6 +11,8 @@ class Paste(Plugin):
         split_msg = str(event.message.content).split(' ')
         if len(split_msg) == 1 and split_msg[0] == '$paste':
             event.reply('Usage: $paste <language/plaintext> <text to post>')
+        elif len(split_msg) == 1:
+            pass
         else:
             command = split_msg[0]
             language_assump = split_msg[1]

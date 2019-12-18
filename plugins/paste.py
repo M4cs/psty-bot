@@ -9,7 +9,7 @@ class Paste(Plugin):
     @Plugin.listen('MessageCreate')
     def on_message_create(self, event):
         split_msg = str(event.message.content).split(' ')
-        if len(split_msg) == 1:
+        if len(split_msg) == 1 and split_msg[0] == '$paste':
             event.reply('Usage: $paste <language/plaintext> <text to post>')
         else:
             command = split_msg[0]

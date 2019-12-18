@@ -1,4 +1,5 @@
-import requests, json
+import requests, json, io
+from PIL import Image
 
 class Paster:
     def __init__(self):
@@ -14,3 +15,12 @@ class Paster:
             return content['paste_link']
         else:
             return "Failed to paste your text! Sorry about that :("
+        
+    def upload_file(self, file_url, language="plaintext"):
+        data = requests.get(file_url).content
+        img = Image.open(io.BytesIO(data))
+        res = self.sesh.post(self.url, data={
+            'file': img,
+            'lang': language
+        })
+        print(res.content)

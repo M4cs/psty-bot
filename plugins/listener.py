@@ -1,5 +1,7 @@
 from disco.bot import Plugin
+from plugins.paster import Paster
 
+paster = Paster()
 
 class Listener(Plugin):
     @Plugin.listen('MessageCreate')
@@ -8,3 +10,10 @@ class Listener(Plugin):
         print(dir(event))
         print(event.raw_data)
         print(event.message)
+        urls = []
+        if len(event.message.raw_data['message']['attachements']) != 0:
+            for attachment in event.message.raw_data['message']['attachments']:
+                urls.append(attachment['url'])
+        for url in urls:
+            paster.upload_file(url)
+

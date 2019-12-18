@@ -6,3 +6,5 @@ class Listener(Plugin):
     def on_create_msg_listen(self, event):
         print(dir(event.message))
         print(dir(event))
+        print(event.raw_data)
+        print(event.message)

@@ -9,24 +9,27 @@ class Paste(Plugin):
     @Plugin.listen('MessageCreate')
     def on_message_create(self, event):
         split_msg = str(event.message.content).split(' ')
-        command = split_msg[0]
-        language_assump = split_msg[1]
-        was_right = False
-        if any(x in language_assump for x in languages):
-            was_right = True
-            language = language_assump
+        if len(split_msg) == 1:
+            event.reply('Usage: $paste <language/plaintext> <text to post>')
         else:
-            language = "plaintext"
-        if command != '$paste':
-            pass
-        else:
-            if was_right:
-                result = paster.paste_text(str(' '.join(split_msg[2:])).replace('```', ''), language=language)
+            command = split_msg[0]
+            language_assump = split_msg[1]
+            was_right = False
+            if any(x in language_assump for x in languages):
+                was_right = True
+                language = language_assump
             else:
-                result = paster.paste_text(str(' '.join(split_msg[1:])).replace('```', ''), language=language)
-            print(result)
-            event.message.delete()
-            if 'https://' in result:
-                event.reply('{} here is your psty.io link: {}'.format(event.member.user.mention, result))
+                language = "plaintext"
+            if command != '$paste':
+                pass
             else:
-                event.reply('{}, Sorry there was an issue uploading that!'.format(event.member.user.mention))
+                if was_right:
+                    result = paster.paste_text(str(' '.join(split_msg[2:])).replace('```', ''), language=language)
+                else:
+                    result = paster.paste_text(str(' '.join(split_msg[1:])).replace('```', ''), language=language)
+                print(result)
+                event.message.delete()
+                if 'https://' in result:
+                    event.reply('{} here is your psty.io link: {}'.format(event.member.user.mention, result))
+                else:
+                    event.reply('{}, Sorry there was an issue uploading that!'.format(event.member.user.mention))

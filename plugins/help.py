@@ -1,6 +1,7 @@
 from disco.bot import Plugin
 
 class Help(Plugin):
-    @Plugin.command('help')
-    def on_help_command(self, event):
-        event.msg.reply("""$paste <language or plaintext> <content>""")
+     @Plugin.listen('MessageCreate')
+    def on_message_create(self, event):
+        if event.message.content == "<@656638609998217266> help":
+            event.msg.reply("""$paste <language or plaintext> <content>""")
